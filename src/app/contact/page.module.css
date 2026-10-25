@@ -1,0 +1,118 @@
+.grid {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+.formPanel {
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface);
+}
+
+.panelTitle {
+  margin-bottom: 8px;
+  font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+}
+
+.aside {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  padding: 24px 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.card:target {
+  border-color: var(--accent);
+}
+
+.card p {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.asideTitle {
+  font-size: 1.1875rem;
+}
+
+.contacts {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+}
+
+.contacts li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.contacts li > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-strong);
+}
+
+.contacts li > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+}
+
+.contacts a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+}
+
+.contacts a:hover {
+  color: var(--accent-strong);
+}
+
+.contacts .whatsapp {
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.whatsapp svg {
+  width: 16px;
+  height: 16px;
+}
+
+.steps {
+  margin-top: 12px;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+.steps li + li {
+  margin-top: 8px;
+}
+
+.steps li::marker {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 1.55fr 1fr;
+    gap: 40px;
+  }
+
+  .aside {
+    position: sticky;
+    top: calc(var(--nav-height) + 24px);
+  }
+}

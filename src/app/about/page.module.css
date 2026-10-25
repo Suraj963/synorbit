@@ -1,0 +1,149 @@
+.intro {
+  display: grid;
+  gap: 32px;
+}
+
+.introCopy {
+  display: grid;
+  gap: 20px;
+  max-width: 64ch;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+.introCopy p:first-child {
+  color: var(--text);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.45;
+}
+
+/* Cells share hairline dividers (the grid background). No overflow clipping, so the
+   cards can fly in from outside when the grid assembles; corner cells round themselves. */
+.principles {
+  --cell-radius: calc(var(--radius-l) - 1px);
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  margin-top: 56px;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius-l);
+  background: var(--paper-line);
+}
+
+.principle {
+  padding: clamp(28px, 4vw, 40px);
+  background: var(--paper-surface);
+}
+
+.principle:first-child {
+  border-radius: var(--cell-radius) var(--cell-radius) 0 0;
+}
+
+.principle:last-child {
+  border-radius: 0 0 var(--cell-radius) var(--cell-radius);
+}
+
+.principleTitle {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  letter-spacing: -0.03em;
+}
+
+.principleText {
+  margin-top: 12px;
+  color: var(--paper-muted);
+}
+
+.split {
+  display: grid;
+  gap: 40px;
+}
+
+.capabilities {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.capability {
+  display: grid;
+  gap: 6px;
+  padding-block: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.capability dt {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.capability dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.expectations {
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.expectations li {
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+}
+
+.expectations h3 {
+  font-size: 1.1875rem;
+  line-height: 1.3;
+}
+
+.expectations p {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .principles {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .principle:nth-child(1) {
+    border-radius: var(--cell-radius) 0 0 0;
+  }
+
+  .principle:nth-child(2) {
+    border-radius: 0 var(--cell-radius) 0 0;
+  }
+
+  .principle:nth-child(3) {
+    border-radius: 0 0 0 var(--cell-radius);
+  }
+
+  .principle:nth-child(4) {
+    border-radius: 0 0 var(--cell-radius) 0;
+  }
+
+  .capability {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .intro {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 80px;
+  }
+
+  .split {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 80px;
+  }
+
+  .splitIntro {
+    position: sticky;
+    top: calc(var(--nav-height) + 32px);
+    align-self: start;
+  }
+}

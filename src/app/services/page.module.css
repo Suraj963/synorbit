@@ -1,0 +1,14 @@
+.pricing {
+  display: grid;
+  gap: 16px;
+  max-width: 820px;
+}
+
+.pricingTitle {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.pricing p {
+  color: var(--muted);
+  font-size: 1.125rem;
+}

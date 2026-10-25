@@ -1,0 +1,309 @@
+/* ---------- Folder stage ---------- */
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Room above the folder for the pages it fans out */
+  padding-top: clamp(110px, 9vw, 130px);
+}
+
+.stageCompact {
+  padding-top: 210px;
+}
+
+.folder {
+  margin-inline: auto;
+}
+
+.hint {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  text-align: center;
+}
+
+/* A page inside the folder (sits on the folder's white paper) */
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12% 11%;
+  color: #121722;
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Thin bar in the service's colour along the top of the page */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--tone);
+}
+
+.pageIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--tone) 22%, white);
+  color: #121722;
+}
+
+.pageIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pageTitle {
+  margin-top: 12px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.pageTagline {
+  margin-top: 6px;
+  color: #4a5468;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.pageMore {
+  margin-top: auto;
+  color: #2b57d9;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* The page whose details are showing */
+.pageActive .pageMore {
+  color: #121722;
+}
+
+.pageActive .pageMore::before {
+  content: "● ";
+  color: var(--tone);
+}
+
+/* ---------- Tabs (keyboard and screen-reader friendly way to switch) ---------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.tab::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.tab:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+/* Selection changes colour only: a bolder weight would widen the pill and reflow the row */
+.tab[aria-selected="true"] {
+  color: var(--text);
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+  box-shadow: inset 0 0 0 1px var(--tone);
+}
+
+/* ---------- Details ---------- */
+
+.details {
+  margin-top: 56px;
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.panel {
+  padding: clamp(28px, 4vw, 56px);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--tone);
+  border-radius: var(--radius-l);
+  background:
+    radial-gradient(60% 80% at 100% 0%, color-mix(in srgb, var(--tone) 10%, transparent), transparent 60%),
+    var(--surface);
+}
+
+.layout {
+  display: grid;
+  gap: 48px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+  color: var(--tone);
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.title {
+  margin-top: 28px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.035em;
+}
+
+.intro {
+  margin-top: 20px;
+  max-width: 54ch;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+.forWho {
+  margin-top: 32px;
+  padding: 20px 24px;
+  border-left: 2px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 7%, transparent);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+}
+
+.forWho h3,
+.block h3 {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.forWho p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.body {
+  display: grid;
+  gap: 36px;
+}
+
+.block ul {
+  list-style: none;
+  margin-top: 14px;
+}
+
+.problems li,
+.checklist li {
+  position: relative;
+  padding: 10px 0 10px 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.problems li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 23px;
+  width: 10px;
+  height: 1.5px;
+  background: var(--muted);
+}
+
+.checklist li {
+  color: var(--text);
+}
+
+/* Small orbit-dot bullet for capabilities */
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 19px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tone);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags li {
+  padding: 8px 14px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-strong);
+  font-size: 0.9375rem;
+}
+
+.engagement {
+  margin-top: 10px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+@media (min-width: 768px) {
+  .checklist {
+    columns: 2;
+    column-gap: 32px;
+  }
+
+  .checklist li {
+    break-inside: avoid;
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 64px;
+  }
+
+  .head {
+    position: sticky;
+    top: calc(var(--nav-height) + 32px);
+    align-self: start;
+  }
+
+  .checklist {
+    columns: 1;
+  }
+}

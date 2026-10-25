@@ -1,0 +1,495 @@
+/*
+ * Launch loader timeline (3.4s total):
+ *   0.0–0.6s  rocket rumbles on the pad, smoke billows
+ *   0.6–2.3s  lift-off and climb; stars streak faster; the moon drops into view
+ *   2.3–2.6s  the rocket reaches the moon: flash, orbit ring lights up
+ *   2.8–3.4s  the scene fades out
+ */
+
+.overlay {
+  --launch: 0.6s;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 70% at 50% 110%, #16203a 0%, transparent 60%),
+    radial-gradient(80% 60% at 70% 0%, #121a30 0%, transparent 70%),
+    var(--ink);
+  cursor: pointer;
+  animation: overlay-out 0.6s ease 2.8s forwards;
+}
+
+/* Already launched this session: hidden before first paint by the layout's inline script */
+:global(.loader-skip) .overlay {
+  display: none;
+}
+
+.leaving {
+  animation: overlay-out 0.35s ease forwards;
+}
+
+@keyframes overlay-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ---------- Stars: two layers drifting down, accelerating at lift-off ---------- */
+
+.stars {
+  position: absolute;
+  inset: -100% 0 0;
+  background-repeat: repeat;
+  will-change: transform;
+}
+
+.starsFar {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgb(238 241 247 / 0.7), transparent),
+    radial-gradient(1px 1px at 120px 90px, rgb(147 176 255 / 0.6), transparent),
+    radial-gradient(1px 1px at 200px 160px, rgb(238 241 247 / 0.5), transparent),
+    radial-gradient(1px 1px at 70px 210px, rgb(69 211 230 / 0.5), transparent);
+  background-size: 240px 240px;
+  animation: drift 2.4s cubic-bezier(0.6, 0, 0.8, 0.6) var(--launch) both;
+}
+
+.starsNear {
+  background-image:
+    radial-gradient(1.5px 3px at 40px 60px, rgb(238 241 247 / 0.9), transparent),
+    radial-gradient(1.5px 3px at 210px 150px, rgb(147 176 255 / 0.85), transparent),
+    radial-gradient(2px 4px at 310px 40px, rgb(69 211 230 / 0.75), transparent);
+  background-size: 360px 300px;
+  animation: drift-fast 2.2s cubic-bezier(0.55, 0, 0.75, 0.5) var(--launch) both;
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(40%);
+  }
+}
+
+/* The near layer stretches as speed builds, so stars read as streaks */
+@keyframes drift-fast {
+  from {
+    transform: translateY(0) scaleY(1);
+  }
+  60% {
+    transform: translateY(30%) scaleY(1.6);
+  }
+  to {
+    transform: translateY(50%) scaleY(2.2);
+  }
+}
+
+/* ---------- Moon ---------- */
+
+.moonSystem {
+  position: absolute;
+  top: 9vh;
+  left: 62vw;
+  width: min(28vmin, 220px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  animation: moon-arrive 1.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+@keyframes moon-arrive {
+  from {
+    transform: translateY(-70vh) scale(0.7);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+.moon {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #f4f6fb 0%, #c7cfdf 45%, #8a95ad 80%, #5e6880 100%);
+  box-shadow:
+    0 0 60px rgb(147 176 255 / 0.35),
+    inset -18px -14px 30px rgb(10 13 20 / 0.45);
+}
+
+/* Craters */
+.moon i {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgb(94 104 128 / 0.55), rgb(138 149 173 / 0.25) 70%);
+  box-shadow: inset 2px 2px 4px rgb(10 13 20 / 0.25);
+}
+
+.moon i:nth-child(1) {
+  top: 22%;
+  left: 52%;
+  width: 18%;
+  height: 18%;
+}
+
+.moon i:nth-child(2) {
+  top: 55%;
+  left: 28%;
+  width: 24%;
+  height: 24%;
+}
+
+.moon i:nth-child(3) {
+  top: 34%;
+  left: 20%;
+  width: 11%;
+  height: 11%;
+}
+
+.moon i:nth-child(4) {
+  top: 66%;
+  left: 62%;
+  width: 13%;
+  height: 13%;
+}
+
+/* Orbit ring: back half behind the moon, front half over it */
+.moonRing,
+.moonRingFront {
+  position: absolute;
+  inset: 34% -42%;
+  border-radius: 50%;
+  border: 2px solid rgb(111 149 255 / 0.45);
+  rotate: -16deg;
+  animation: ring-glow 0.8s ease 2.3s both;
+}
+
+.moonRingFront {
+  clip-path: inset(50% 0 0 0);
+  border-color: rgb(147 176 255 / 0.85);
+  filter: drop-shadow(0 0 6px rgb(111 149 255 / 0.8));
+}
+
+@keyframes ring-glow {
+  50% {
+    border-color: rgb(69 211 230 / 1);
+    filter: drop-shadow(0 0 14px rgb(69 211 230 / 0.9));
+  }
+}
+
+/* Touchdown flash where the rocket lands */
+.flash {
+  position: absolute;
+  left: 18%;
+  bottom: 22%;
+  width: 30%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgb(69 211 230 / 0.8) 35%, transparent 70%);
+  opacity: 0;
+  animation: flash 0.7s ease-out 2.3s both;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+/* ---------- Ground, pad and smoke ---------- */
+
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32vh;
+  background: linear-gradient(180deg, transparent, rgb(24 32 49 / 0.9) 40%, #111622);
+  animation: fall-away 1.6s cubic-bezier(0.55, 0, 0.75, 0.5) var(--launch) both;
+}
+
+.pad {
+  position: absolute;
+  left: 50%;
+  bottom: 30vh;
+  width: 120px;
+  height: 8px;
+  translate: -50% 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent, #34415c 15%, #6f95ff 50%, #34415c 85%, transparent);
+  box-shadow: 0 0 18px rgb(111 149 255 / 0.5);
+  animation: fall-away 1.6s cubic-bezier(0.55, 0, 0.75, 0.5) var(--launch) both;
+}
+
+@keyframes fall-away {
+  to {
+    transform: translateY(30vh);
+    opacity: 0;
+  }
+}
+
+.smoke {
+  position: absolute;
+  left: 50%;
+  bottom: 30vh;
+  width: 0;
+  height: 0;
+}
+
+.smoke span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgb(238 241 247 / 0.55), rgb(154 164 184 / 0.25) 60%, transparent 72%);
+  opacity: 0;
+  animation: puff 1.6s ease-out var(--delay) both;
+}
+
+@keyframes puff {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) translateY(0);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.1) translateY(10px);
+  }
+}
+
+/* ---------- Rocket ---------- */
+
+/* Climbs from the pad and arcs up to the moon, shrinking into the distance */
+.flight {
+  position: absolute;
+  left: 50%;
+  bottom: 30vh;
+  width: 64px;
+  margin-left: -32px;
+  transform-origin: 50% 100%;
+  animation: flight 1.75s cubic-bezier(0.5, 0, 0.75, 0.3) var(--launch) both;
+}
+
+@keyframes flight {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  35% {
+    transform: translate(1vw, -15vh) rotate(4deg) scale(0.92);
+  }
+  70% {
+    transform: translate(7vw, -35vh) rotate(18deg) scale(0.55);
+  }
+  96% {
+    transform: translate(9vw, -47vh) rotate(26deg) scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(9vw, -48vh) rotate(26deg) scale(0.12);
+    opacity: 0;
+  }
+}
+
+/* Engine rumble on the pad, easing off once airborne */
+.shake {
+  position: relative;
+  animation: rumble 0.08s linear 0.1s 9 alternate;
+}
+
+@keyframes rumble {
+  from {
+    transform: translateX(-1.5px);
+  }
+  to {
+    transform: translateX(1.5px);
+  }
+}
+
+.rocket {
+  position: relative;
+  z-index: 1;
+  width: 64px;
+  height: 128px;
+  filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.5));
+}
+
+/* Exhaust: ignites on the pad, lengthens at lift-off, flickers throughout */
+.flame {
+  position: absolute;
+  top: 96px;
+  left: 50%;
+  width: 22px;
+  height: 64px;
+  margin-left: -11px;
+  transform-origin: 50% 0;
+  animation: ignite 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.flame i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  background: radial-gradient(ellipse at 50% 15%, #ffffff 0%, #9cecf5 22%, #45d3e6 42%, #6f95ff 65%, transparent 75%);
+  filter: blur(1px) drop-shadow(0 0 12px rgb(69 211 230 / 0.9));
+  transform-origin: 50% 0;
+  animation: flicker 0.11s ease-in-out infinite alternate;
+}
+
+@keyframes ignite {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  40% {
+    transform: scaleY(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1.8);
+    opacity: 1;
+  }
+}
+
+@keyframes flicker {
+  from {
+    transform: scale(0.9, 0.88);
+  }
+  to {
+    transform: scale(1.06, 1.12);
+  }
+}
+
+/* ---------- Brand and status ---------- */
+
+.brand {
+  position: absolute;
+  left: 50%;
+  bottom: 4.5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  translate: -50% 0;
+  text-align: center;
+  animation: fade-up 0.6s ease 0.1s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.wordmark {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.status {
+  position: relative;
+  display: block;
+  height: 1.3em;
+  min-width: 16ch;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.status span {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+
+.statusLaunch {
+  animation: swap-out 0.3s ease 1.6s forwards;
+}
+
+.statusOrbit {
+  opacity: 0;
+  animation: swap-in 0.3s ease 1.75s forwards;
+}
+
+@keyframes swap-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.progress {
+  display: block;
+  width: 140px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--signal));
+  transform-origin: 0 50%;
+  animation: progress 2.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- Reduced motion: a short, still splash that fades quickly ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    animation: overlay-out 0.4s ease 0.6s forwards;
+  }
+
+  .overlay * {
+    animation: none !important;
+  }
+
+  .statusOrbit {
+    opacity: 0;
+  }
+
+  .progress i {
+    transform: scaleX(1);
+  }
+}

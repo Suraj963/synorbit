@@ -1,0 +1,98 @@
+.form {
+  display: grid;
+  gap: 22px;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.row {
+  display: grid;
+  gap: 22px;
+}
+
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.alertLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.submitRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+/* SpecularButton sizing (doubled class wins over its size padding) */
+.action.action {
+  min-height: 48px;
+  padding-block: 0;
+  font-weight: 600;
+}
+
+.submit {
+  min-width: 200px;
+}
+
+.privacy {
+  flex: 1 1 260px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.success {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: clamp(28px, 4vw, 40px);
+  border: 1px solid rgb(79 214 156 / 0.4);
+  border-radius: var(--radius-l);
+  background: rgb(79 214 156 / 0.06);
+}
+
+.success p {
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.successIcon {
+  width: 36px;
+  height: 36px;
+  color: var(--success);
+}
+
+.successTitle {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.successTitle:focus {
+  outline: none;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .submit {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .submit {
+    width: 100%;
+  }
+}

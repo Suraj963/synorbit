@@ -1,0 +1,396 @@
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  container-type: inline-size;
+  overflow: hidden;
+  /* Percentages: cqw here would resolve against an ancestor container */
+  padding: 7% 7% 0;
+  background: var(--raised);
+}
+
+.toneStudio {
+  background: radial-gradient(90% 90% at 80% 10%, rgb(111 149 255 / 0.3), transparent 60%), #141b2b;
+}
+
+.toneDashboard {
+  background: radial-gradient(90% 90% at 10% 0%, rgb(69 211 230 / 0.22), transparent 60%), #10202a;
+}
+
+.toneBooking {
+  background: radial-gradient(90% 90% at 90% 100%, rgb(79 214 156 / 0.2), transparent 60%), #10231f;
+}
+
+.toneStorefront {
+  background: radial-gradient(90% 90% at 0% 100%, rgb(240 196 106 / 0.2), transparent 60%), #241d14;
+}
+
+.window {
+  height: 100%;
+  border-radius: 2cqw 2cqw 0 0;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-bottom: 0;
+  background: var(--ink);
+  box-shadow: 0 -2cqw 6cqw rgb(0 0 0 / 0.35);
+  overflow: hidden;
+  transition: transform 0.5s var(--ease-out);
+}
+
+/* Lift the window when the surrounding project card is hovered */
+:global(.project-link):hover .window {
+  transform: translateY(-1.5cqw);
+}
+
+.chrome {
+  display: flex;
+  gap: 0.9cqw;
+  padding: 1.6cqw 2cqw;
+  border-bottom: 1px solid var(--line);
+}
+
+.chrome i {
+  width: 1.2cqw;
+  height: 1.2cqw;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.body {
+  height: 100%;
+  padding: 3cqw;
+}
+
+.shot {
+  position: relative;
+  height: 100%;
+}
+
+/* Show the top-left of the screen (logo, heading, first widgets) when cropped */
+.shotImage {
+  object-fit: cover;
+  object-position: left top;
+}
+
+/* Shared bar primitives */
+.body i,
+.body b,
+.body em,
+.body span {
+  display: block;
+}
+
+/* ---------- Studio (Synorbit site) ---------- */
+
+.navRow {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+}
+
+.logoDot {
+  width: 7cqw;
+  height: 1.6cqw;
+  border-radius: 99px;
+  background: var(--text);
+}
+
+.navLinks {
+  display: flex !important;
+  gap: 1.4cqw;
+  margin-inline: auto;
+}
+
+.navLinks i {
+  width: 4.5cqw;
+  height: 1cqw;
+  border-radius: 99px;
+  background: var(--line-strong);
+}
+
+.navCta {
+  width: 9cqw;
+  height: 2.6cqw;
+  border-radius: 99px;
+  background: var(--accent);
+}
+
+.studioHero {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 3cqw;
+  align-items: center;
+  margin-top: 5cqw;
+}
+
+.studioCopy {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.4cqw;
+}
+
+.h1,
+.h1Short {
+  height: 3.6cqw;
+  border-radius: 99px;
+  background: var(--text);
+}
+
+.h1Short {
+  width: 75%;
+}
+
+.p,
+.pShort {
+  height: 1.1cqw;
+  margin-top: 0.4cqw;
+  border-radius: 99px;
+  background: var(--muted);
+  opacity: 0.6;
+}
+
+.pShort {
+  width: 70%;
+  margin-top: 0;
+}
+
+.ctaPair {
+  display: flex !important;
+  gap: 1.2cqw;
+  margin-top: 1.6cqw;
+}
+
+.ctaPair i {
+  width: 11cqw;
+  height: 3.2cqw;
+  border-radius: 99px;
+  background: var(--accent);
+}
+
+.ctaPair i + i {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+}
+
+.studioOrbit {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.miniRing {
+  position: absolute;
+  inset: 32% -4%;
+  border: 1px solid rgb(111 149 255 / 0.6);
+  border-radius: 50%;
+  transform: rotate(-14deg);
+}
+
+.miniWindow,
+.miniWindowFront {
+  position: absolute;
+  border-radius: 1.2cqw;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.miniWindow {
+  inset: 12% 34% 40% 4%;
+}
+
+.miniWindowFront {
+  inset: 34% 6% 16% 26%;
+  background: linear-gradient(180deg, var(--raised), var(--surface));
+}
+
+.miniSat {
+  position: absolute;
+  right: 4%;
+  top: 40%;
+  width: 2.2cqw;
+  height: 2.2cqw;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 2cqw var(--signal);
+}
+
+/* ---------- Dashboard ---------- */
+
+.dashboard {
+  display: grid !important;
+  grid-template-columns: 14cqw 1fr;
+  gap: 3cqw;
+  height: 100%;
+}
+
+.side {
+  display: flex !important;
+  flex-direction: column;
+  gap: 2cqw;
+}
+
+.side i {
+  height: 1.4cqw;
+  border-radius: 99px;
+  background: var(--line-strong);
+}
+
+.side .sideOn {
+  background: var(--signal);
+}
+
+.kpis {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2cqw;
+}
+
+.kpis i {
+  height: 9cqw;
+  border-radius: 1.4cqw;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.table {
+  margin-top: 3cqw;
+}
+
+.tr {
+  display: grid !important;
+  grid-template-columns: 1fr 0.6fr 8cqw;
+  align-items: center;
+  gap: 2cqw;
+  padding-block: 1.6cqw;
+  border-bottom: 1px solid var(--line);
+}
+
+.tr i {
+  height: 1.2cqw;
+  border-radius: 99px;
+  background: var(--line-strong);
+}
+
+.tr b {
+  height: 2.4cqw;
+  border-radius: 99px;
+}
+
+.ok {
+  background: rgb(79 214 156 / 0.35);
+}
+
+.late {
+  background: rgb(255 138 138 / 0.45);
+}
+
+.hold {
+  background: rgb(240 196 106 / 0.4);
+}
+
+/* ---------- Booking ---------- */
+
+.booking {
+  display: grid !important;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 4cqw;
+}
+
+.calendar {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1.2cqw;
+}
+
+.calendar i {
+  aspect-ratio: 1;
+  border-radius: 1cqw;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.calendar .dayOn {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.calendar .dayOff {
+  opacity: 0.35;
+}
+
+.slots {
+  display: flex !important;
+  flex-direction: column;
+  gap: 1.6cqw;
+}
+
+.slotTitle {
+  width: 60%;
+  height: 2cqw;
+  border-radius: 99px;
+  background: var(--text);
+}
+
+.slot,
+.slotOn {
+  height: 4.4cqw;
+  border-radius: 1.2cqw;
+  border: 1px solid var(--line-strong);
+}
+
+.slotOn {
+  border: 2px solid var(--success);
+  background: rgb(79 214 156 / 0.12);
+}
+
+.confirm {
+  height: 4.6cqw;
+  margin-top: 1cqw;
+  border-radius: 99px;
+  background: var(--success);
+}
+
+/* ---------- Storefront ---------- */
+
+.chips {
+  display: flex !important;
+  gap: 1.4cqw;
+}
+
+.chips i {
+  width: 10cqw;
+  height: 3cqw;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+}
+
+.chips .chipOn {
+  background: #f0c46a;
+  border-color: #f0c46a;
+}
+
+.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4cqw;
+  margin-top: 3cqw;
+}
+
+.product i {
+  aspect-ratio: 4 / 3;
+  border-radius: 1.4cqw;
+  background: linear-gradient(135deg, #3a2f1f, #2a3346);
+}
+
+.product b {
+  width: 80%;
+  height: 1.3cqw;
+  margin-top: 1.4cqw;
+  border-radius: 99px;
+  background: var(--text);
+}
+
+.product em {
+  width: 40%;
+  height: 1.3cqw;
+  margin-top: 1cqw;
+  border-radius: 99px;
+  background: #f0c46a;
+}

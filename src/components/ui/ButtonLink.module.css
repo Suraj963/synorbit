@@ -1,0 +1,17 @@
+/* Layout tweaks on top of SpecularButton's own styles (doubled class wins over its size padding) */
+.button.button {
+  min-height: 48px;
+  padding-block: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.button svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.button:hover svg {
+  transform: translateX(3px);
+}

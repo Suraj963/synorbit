@@ -1,0 +1,27 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+}
+
+.all {
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 56px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .featured {
+    grid-column: 1 / -1;
+  }
+}

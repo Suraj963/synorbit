@@ -1,0 +1,96 @@
+.steps {
+  position: relative;
+  list-style: none;
+  display: grid;
+  gap: 0;
+  margin-top: 64px;
+}
+
+/* Vertical track on small screens */
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 19px;
+  width: 1px;
+  background: var(--paper-line);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-content: start;
+  column-gap: 20px;
+  padding-bottom: 36px;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+.marker {
+  grid-row: span 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--paper-line);
+  background: var(--paper-surface);
+  color: var(--paper-text);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.step:first-child .marker {
+  background: var(--paper-text);
+  border-color: var(--paper-text);
+  color: var(--paper);
+}
+
+.title {
+  padding-top: 6px;
+  font-size: 1.375rem;
+}
+
+.text {
+  margin-top: 8px;
+  color: var(--paper-muted);
+  font-size: 1rem;
+  max-width: 44ch;
+}
+
+@media (min-width: 1024px) {
+  .steps {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px;
+  }
+
+  /* Horizontal track on wide screens */
+  .steps::before {
+    top: 20px;
+    bottom: auto;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    height: 1px;
+  }
+
+  .step {
+    grid-template-columns: 1fr;
+    padding-bottom: 0;
+  }
+
+  .marker {
+    grid-row: auto;
+  }
+
+  .title {
+    margin-top: 24px;
+    padding-top: 0;
+  }
+}

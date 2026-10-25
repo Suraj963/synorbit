@@ -1,0 +1,19 @@
+.note {
+  max-width: 76ch;
+  margin-bottom: 40px;
+  padding: 20px 24px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+  color: var(--muted);
+  font-size: 0.9875rem;
+}
+
+.note strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.note em {
+  font-style: normal;
+  color: var(--text);
+}

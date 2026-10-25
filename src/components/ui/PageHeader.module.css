@@ -1,0 +1,159 @@
+.header {
+  position: relative;
+  overflow: hidden;
+  margin-top: calc(var(--nav-height) * -1);
+  padding-top: calc(var(--nav-height) + clamp(56px, 9vw, 120px));
+  padding-bottom: clamp(56px, 8vw, 104px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Particle field filling the header, including under the transparent navbar */
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------- Orbit ---------- */
+
+/* The ellipse is this box; every ring and the satellites' path are sized from it */
+.orbit {
+  position: absolute;
+  top: 16%;
+  /* Starts past the middle so the orbit stays clear of the heading and intro text */
+  left: 54%;
+  width: min(1100px, 120vw);
+  aspect-ratio: 2.6;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.orbit > span {
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Soft light at the centre of the system */
+.core {
+  inset: 22% 30%;
+  background: radial-gradient(closest-side, rgb(111 149 255 / 0.16), transparent 75%);
+  filter: blur(8px);
+}
+
+.ringOuter {
+  inset: -9% -5%;
+  border: 1px dashed rgb(154 164 184 / 0.22);
+}
+
+.ringInner {
+  inset: 20% 16%;
+  border: 1px solid rgb(154 164 184 / 0.12);
+}
+
+/* The orbit itself: faint on the far (upper) side... */
+.ring {
+  inset: 0;
+  border: 1.5px solid rgb(111 149 255 / 0.32);
+}
+
+/* ...bright and glowing on the near (lower) side */
+.arc {
+  inset: 0;
+  border: 2px solid rgb(147 176 255 / 0.85);
+  clip-path: inset(50% 0 0 0);
+  filter: drop-shadow(0 0 8px rgb(111 149 255 / 0.7));
+}
+
+.satellite {
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  background: var(--signal);
+  box-shadow:
+    0 0 0 5px rgb(69 211 230 / 0.16),
+    0 0 22px rgb(69 211 230 / 0.75);
+  /* Matches .ring: the path starts at the right end and runs clockwise */
+  offset-path: ellipse(50% 50% at 50% 50%);
+  offset-anchor: 50% 50%;
+  offset-rotate: 0deg;
+  animation:
+    orbit 34s linear infinite,
+    depth 34s linear infinite;
+}
+
+/* A smaller companion, half an orbit behind */
+.moon {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-strong);
+  box-shadow: 0 0 16px rgb(147 176 255 / 0.85);
+  animation-delay: -17s;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Full size and brightness on the near half (0–50%), smaller and dimmer on the far half */
+@keyframes depth {
+  0%,
+  100% {
+    opacity: 0.75;
+    scale: 0.88;
+  }
+  10%,
+  40% {
+    opacity: 1;
+    scale: 1;
+  }
+  60%,
+  90% {
+    opacity: 0.35;
+    scale: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satellite {
+    animation: none;
+    offset-distance: 30%;
+  }
+
+  .moon {
+    offset-distance: 8%;
+  }
+}
+
+/* On phones the title spans the width, so the orbit sits higher and quieter */
+@media (max-width: 767px) {
+  .orbit {
+    top: -4%;
+    left: 18%;
+    width: 170vw;
+    opacity: 0.45;
+  }
+}
+
+.inner {
+  position: relative;
+}
+
+.title {
+  max-width: 20ch;
+  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.lead {
+  margin-top: 24px;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+}

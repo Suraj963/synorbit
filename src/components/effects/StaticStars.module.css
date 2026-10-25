@@ -1,0 +1,35 @@
+/* Static starfield for devices without graphics acceleration: tiled dots in the
+   brand colours, offset tiles so the pattern doesn't read as a grid. */
+.staticStars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, rgb(238 241 247 / 0.9), transparent),
+    radial-gradient(1px 1px at 140px 80px, rgb(147 176 255 / 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 90px 150px, rgb(69 211 230 / 0.7), transparent),
+    radial-gradient(1px 1px at 210px 190px, rgb(238 241 247 / 0.7), transparent),
+    radial-gradient(2px 2px at 260px 40px, rgb(111 149 255 / 0.8), transparent),
+    radial-gradient(1px 1px at 50px 230px, rgb(238 241 247 / 0.6), transparent);
+  background-size:
+    300px 260px,
+    300px 260px,
+    300px 260px,
+    300px 260px,
+    300px 260px,
+    300px 260px;
+  background-position:
+    0 0,
+    37px 91px,
+    113px 23px,
+    71px 167px,
+    191px 113px,
+    251px 7px;
+  opacity: 0.85;
+  animation: fade-in 1.2s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}

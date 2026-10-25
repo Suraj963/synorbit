@@ -1,0 +1,122 @@
+.hero {
+  position: relative;
+  margin-top: calc(var(--nav-height) * -1);
+  padding-top: calc(var(--nav-height) + clamp(40px, 7vw, 88px));
+  padding-bottom: clamp(64px, 9vw, 120px);
+  overflow: hidden;
+}
+
+/* Galaxy starfield fills the hero, including the area under the transparent navbar */
+.galaxy {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Keeps the copy readable over the stars and blends the hero into the next section */
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgb(10 13 20 / 0.7) 0%, rgb(10 13 20 / 0.3) 45%, transparent 70%),
+    linear-gradient(180deg, transparent 80%, var(--ink) 100%);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  gap: clamp(48px, 7vw, 72px);
+  align-items: center;
+}
+
+.copy {
+  max-width: 620px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 4px rgb(69 211 230 / 0.16);
+}
+
+.title {
+  margin-top: 24px;
+  font-size: clamp(2.75rem, 8.4vw, 4.75rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.titleLine {
+  display: block;
+}
+
+.lead {
+  margin-top: 28px;
+  max-width: 48ch;
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.note {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.note a {
+  color: var(--text);
+}
+
+.visual {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+/* On narrow screens the copy spans the full width, so dim the stars evenly */
+@media (max-width: 1023px) {
+  .scrim {
+    background:
+      linear-gradient(180deg, rgb(10 13 20 / 0.55) 0%, rgb(10 13 20 / 0.55) 60%, var(--ink) 100%);
+  }
+}
+
+@media (max-width: 420px) {
+  .actions > * {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+
+  .visual {
+    margin-right: calc(var(--gutter) * -0.5);
+  }
+}

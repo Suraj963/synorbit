@@ -1,0 +1,83 @@
+.wrap {
+  padding-block: 0 var(--section-space);
+}
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 7vw, 96px) clamp(24px, 6vw, 80px);
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(70% 120% at 100% 100%, rgb(111 149 255 / 0.22), transparent 60%),
+    var(--surface);
+}
+
+.copy {
+  position: relative;
+  max-width: 640px;
+}
+
+.title {
+  font-size: clamp(2.125rem, 5vw, 3.75rem);
+  letter-spacing: -0.035em;
+}
+
+.text {
+  margin-top: 20px;
+  max-width: 48ch;
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+}
+
+.button {
+  margin-top: 36px;
+}
+
+/* Orbit motif, echoing the logo and hero */
+.orbit {
+  position: absolute;
+  right: -12%;
+  bottom: -40%;
+  width: min(640px, 90%);
+  aspect-ratio: 1;
+  transform: rotate(-14deg);
+  opacity: 0.9;
+}
+
+.ring,
+.ringInner {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ring {
+  inset: 30% 0;
+  border: 1.5px solid rgb(111 149 255 / 0.5);
+}
+
+.ringInner {
+  inset: 38% 14%;
+  border: 1px dashed rgb(154 164 184 / 0.25);
+}
+
+.planet {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 24px var(--signal);
+}
+
+@media (max-width: 767px) {
+  .orbit {
+    right: -40%;
+    bottom: -30%;
+    width: 120%;
+    opacity: 0.5;
+  }
+}

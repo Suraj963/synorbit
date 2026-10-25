@@ -1,0 +1,376 @@
+/*
+ * The whole composition is sized in container units (cqw) so it scales as
+ * one piece from phone to desktop.
+ */
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 10 / 9;
+  container-type: inline-size;
+  font-family: var(--font-body), sans-serif;
+  isolation: isolate;
+  user-select: none;
+}
+
+/* ---------- Orbit ---------- */
+
+/* Each layer is rotated on its own: a transform creates a stacking context, so
+   one shared wrapper would keep the whole orbit behind the windows. */
+.orbit {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.orbitBack {
+  z-index: 0;
+}
+
+.orbitFront {
+  z-index: 4;
+}
+
+.ring,
+.ringOuter {
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* rx = 54% of width, ry = 26% of height; the satellites' offset-path matches */
+.ring {
+  inset: 24% -4%;
+  animation: ring-in 1.2s var(--ease-out) 0.35s both;
+}
+
+.ringBack {
+  border: 1.5px solid rgb(111 149 255 / 0.4);
+}
+
+/* Near half of the ring: brighter, with a soft glow, drawn over the windows */
+.ringFront {
+  border: 2px solid rgb(147 176 255 / 0.95);
+  clip-path: inset(50% 0 0 0);
+  filter: drop-shadow(0 0 1.2cqw rgb(111 149 255 / 0.75));
+}
+
+.ringOuter {
+  inset: 14% -13%;
+  border: 1px dashed rgb(154 164 184 / 0.3);
+  animation: ring-in 1.2s var(--ease-out) 0.5s both;
+}
+
+.satellite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.8cqw;
+  height: 2.8cqw;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow:
+    0 0 0 0.9cqw rgb(69 211 230 / 0.18),
+    0 0 3.5cqw rgb(69 211 230 / 0.7);
+  offset-path: ellipse(54% 26% at 50% 50%);
+  offset-rotate: 0deg;
+  offset-anchor: 50% 50%;
+  animation-duration: 28s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* A smaller companion, half an orbit behind the main satellite */
+.moon {
+  width: 1.6cqw;
+  height: 1.6cqw;
+  background: var(--accent-strong);
+  box-shadow: 0 0 2.4cqw rgb(147 176 255 / 0.8);
+  animation-delay: -14s;
+}
+
+/* The path starts at the right end and runs clockwise (measured): 0%–50% is the near (lower) half */
+.farSide {
+  animation-name: orbit, far-side;
+}
+
+.nearSide {
+  animation-name: orbit, near-side;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes near-side {
+  0%,
+  49.9% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes far-side {
+  0%,
+  49.9% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---------- Windows ---------- */
+
+.window {
+  position: absolute;
+  border-radius: 2.2cqw;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow:
+    0 3cqw 8cqw rgb(0 0 0 / 0.45),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  height: 5.6cqw;
+  padding: 0 2.2cqw;
+  border-bottom: 1px solid var(--line);
+  background: var(--raised);
+}
+
+.dots {
+  display: flex;
+  gap: 0.9cqw;
+}
+
+.dots i {
+  width: 1.3cqw;
+  height: 1.3cqw;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.url {
+  flex: 1;
+  max-width: 60%;
+  margin-inline: auto;
+  padding: 0.6cqw 1.6cqw;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--muted);
+  font-size: 1.7cqw;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Website window */
+.siteWindow {
+  top: 7%;
+  left: 3%;
+  width: 56%;
+  z-index: 1;
+  animation: rise-in 0.9s var(--ease-out) 0.05s both;
+}
+
+/* Application window */
+.appWindow {
+  top: 27%;
+  right: 4%;
+  width: 66%;
+  z-index: 2;
+  animation: rise-in 0.9s var(--ease-out) 0.2s both;
+}
+
+/* Screenshot inside a browser window; the images are 3:2 */
+.shot {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background: var(--ink);
+}
+
+.shotImage {
+  object-fit: cover;
+  object-position: left top;
+}
+
+/* ---------- Satellite panels ---------- */
+
+.panel {
+  position: absolute;
+  z-index: 4;
+  border: 1px solid var(--line-strong);
+  background: rgb(24 32 49 / 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2.4cqw 6cqw rgb(0 0 0 / 0.45);
+  animation: pop-in 0.7s var(--ease-out) both;
+}
+
+.fieldPanel {
+  left: 0;
+  bottom: 21%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqw;
+  width: 34%;
+  padding: 1.8cqw 2cqw;
+  border-radius: 1.8cqw;
+  animation-delay: 0.95s;
+}
+
+.fieldLabel {
+  color: var(--muted);
+  font-size: 1.5cqw;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1cqw;
+  padding: 1.1cqw 1.4cqw;
+  border: 1.5px solid var(--accent);
+  border-radius: 1.1cqw;
+  background: var(--ink);
+  color: var(--text);
+  font-size: 1.7cqw;
+  white-space: nowrap;
+}
+
+.fieldCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4cqw;
+  height: 2.4cqw;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--ink);
+}
+
+.fieldCheck svg {
+  width: 1.6cqw;
+  height: 1.6cqw;
+  stroke-width: 3;
+}
+
+.deployPanel {
+  top: 18%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 1.3cqw 2cqw;
+  border-radius: 99px;
+  color: var(--text);
+  font-size: 1.7cqw;
+  font-weight: 500;
+  white-space: nowrap;
+  animation-delay: 1.1s;
+}
+
+.liveDot {
+  width: 1.4cqw;
+  height: 1.4cqw;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 0.6cqw rgb(79 214 156 / 0.2);
+}
+
+.phone {
+  right: 0;
+  bottom: -1%;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  aspect-ratio: 9 / 17;
+  padding: 2.4cqw 0.8cqw 0.8cqw;
+  border-radius: 2.6cqw;
+  background: var(--surface);
+  border-width: 0.6cqw;
+  border-color: var(--raised);
+  animation-delay: 1.25s;
+}
+
+.phoneNotch {
+  position: absolute;
+  top: 0.9cqw;
+  left: 50%;
+  width: 4cqw;
+  height: 0.9cqw;
+  margin-left: -2cqw;
+  border-radius: 99px;
+  background: var(--raised);
+}
+
+.phoneScreen {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 1.4cqw;
+  background: var(--ink);
+}
+
+/* Crop the operations dashboard to its status chart, as a phone would stack it */
+.phoneImage {
+  object-fit: cover;
+  object-position: 56% 100%;
+  transform: scale(2.5);
+  transform-origin: 56% 100%;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(4cqw) scale(0.98);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(2cqw) scale(0.92);
+  }
+}
+
+@keyframes ring-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Park the satellites on the near arc instead of orbiting */
+  .satellite {
+    animation: none;
+    opacity: 0;
+  }
+
+  .nearSide {
+    opacity: 1;
+    offset-distance: 30%;
+  }
+
+  .nearSide.moon {
+    offset-distance: 12%;
+  }
+}
